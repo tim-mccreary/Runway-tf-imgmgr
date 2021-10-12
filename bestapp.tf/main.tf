@@ -195,7 +195,7 @@ iam_instance_profile {
 }
 
 # Cloudfront Distribution in front of ALB
-resource "aws_cloudfront_distribution" "${terraform.workspace}-cloudfront" {
+resource "aws_cloudfront_distribution" "cloudfront" {
   enabled = true
 
   origin {
