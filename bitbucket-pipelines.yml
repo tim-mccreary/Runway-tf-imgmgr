@@ -5,5 +5,6 @@ pipelines:
     - step:
         deployment: production
         script: 
-          - >-
-             echo "Hello world"
+          - |
+             echo "Hello World $PLACE" > motd.txt
+             cat motd.txt | tr [:lower:] [:upper:]
