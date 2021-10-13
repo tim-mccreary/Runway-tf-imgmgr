@@ -4,6 +4,6 @@ pipelines:
   default:
     - step:
         deployment: hello-world
-          script: 
+        script: 
           - >-
-            echo "Hello world"
+             echo "Hello world"
