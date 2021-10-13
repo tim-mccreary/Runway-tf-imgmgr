@@ -1,0 +1,9 @@
+image: irishblockade/tcm-pipeline:latest
+
+pipelines:
+  default:
+    - step:
+        deployment: hello-world
+          script: 
+          - >-
+            echo "Hello world"
