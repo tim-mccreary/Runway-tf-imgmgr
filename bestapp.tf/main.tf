@@ -10,7 +10,7 @@ data "terraform_remote_state" "vpc" {
   backend = "s3"
   config = {
     bucket = "best-common-tf-state-terraformstatebucket-cxlzbj2ir944"
-    region = var.region
+    region = "us-west-2"
     key    = "env:/common/vpc.tfstate"
   }
 }
