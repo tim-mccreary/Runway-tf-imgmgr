@@ -5,6 +5,8 @@ deployments:
       - path: tf-state.cfn
       - path: vpc_common.tf
       - path: bestapp.tf
+        options:
+          terraform_version: 1.0.8
       # - etc...
     regions:
       - us-west-2
