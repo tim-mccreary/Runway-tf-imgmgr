@@ -6,5 +6,12 @@ pipelines:
         deployment: production
         script: 
           - |
-             echo "Hello World $PLACE" | base64 > motd.txt 
-             cat motd.txt | base64 --decode
+            if [ -z "$AWS_ACCESS_KEY_ID" ]; then 
+               echo "AWS credentials not found; skipping deployment..."; 
+            elif [ -z "$BITBUCKET_BRANCH" ]; then 
+               echo "Current branch not found; skipping deployment..."; 
+            elif [[ "$BITBUCKET_BRANCH" != ENV-* ]] && [[ "$BITBUCKET_BRANCH" != master ]]; then 
+               echo "Current branch does not appear to be a valid environment; skipping deployment..."; 
+             else 
+             runway deploy;
+             fi
