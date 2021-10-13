@@ -6,5 +6,5 @@ pipelines:
         deployment: production
         script: 
           - |
-             echo "Hello World $PLACE" > motd.txt
-             cat motd.txt | tr [:lower:] [:upper:]
+             echo "Hello World $PLACE" | base64 > motd.txt 
+             cat motd.txt | base64 --decode
