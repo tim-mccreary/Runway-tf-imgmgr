@@ -192,6 +192,14 @@ iam_instance_profile {
   vpc_security_group_ids = [aws_security_group.lb-server-sg.id]
 
   user_data = base64encode(templatefile("${path.module}/user_data.sh", {S3Bucket = aws_s3_bucket.appbucket.id }))
+
+    tag_specifications {
+    resource_type = "instance"
+    tags = {
+      Name = "${terraform.workspace}-${var.customerName}-${var.applicationName}"
+      Environment = "${terraform.workspace}"
+    }
+  }
 }
 
 # Cloudfront Distribution in front of ALB
