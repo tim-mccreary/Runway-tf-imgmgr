@@ -196,7 +196,7 @@ iam_instance_profile {
     tag_specifications {
     resource_type = "instance"
     tags = {
-      Name = "${terraform.workspace}-${var.customerName}-${var.applicationName}"
+      Name = "${var.applicationName}-web1-${var.customerName}-${terraform.workspace}"
       Environment = "${terraform.workspace}"
     }
   }
