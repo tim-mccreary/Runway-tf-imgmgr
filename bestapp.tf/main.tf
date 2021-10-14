@@ -158,11 +158,11 @@ resource "aws_lb_listener" "lb_listener" {
 ## autoscaling group
 resource "aws_autoscaling_group" "best_asg" {
   name                      = "${terraform.workspace}-${var.applicationName}-asg"
-  max_size                  = 2
-  min_size                  = 2
+  max_size                  = 1
+  min_size                  = 1
   health_check_grace_period = 300
   health_check_type         = "EC2"
-  desired_capacity          = 2
+  desired_capacity          = 1
   force_delete              = true
   vpc_zone_identifier       = data.terraform_remote_state.vpc.outputs.private_subnets
   target_group_arns = [aws_alb_target_group.lb_targets.arn]
@@ -176,7 +176,7 @@ resource "aws_autoscaling_group" "best_asg" {
     strategy = "Rolling"
     triggers = ["tag", "launch_template"]
     }
-  } 
+  }
 
 ## Launch Templete
 resource "aws_launch_template" "best-lt" {
@@ -187,7 +187,7 @@ resource "aws_launch_template" "best-lt" {
 iam_instance_profile {
   name = aws_iam_instance_profile.ec2_profile.name
 }
-  instance_type = "t2.small"
+  instance_type = "t2.micro"
   key_name = "us-west-2-key"
   vpc_security_group_ids = [aws_security_group.lb-server-sg.id]
 
@@ -213,13 +213,13 @@ resource "aws_cloudfront_distribution" "cloudfront" {
   allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
   cached_methods   = ["GET", "HEAD"]
   target_origin_id     = "${terraform.workspace}-${var.applicationName}-alb"
-  
+
   forwarded_values {
     query_string = false
 
     cookies {
       forward = "all"
-    }  
+    }
   }
 
     min_ttl                = 0
@@ -228,8 +228,8 @@ resource "aws_cloudfront_distribution" "cloudfront" {
     compress               = true
     viewer_protocol_policy = "redirect-to-https"
   }
-  
-  
+
+
   restrictions {
     geo_restriction {
       restriction_type = "whitelist"
